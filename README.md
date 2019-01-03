@@ -40,7 +40,7 @@ The LDAP tester can be placed anywhere on your Polarity Server and does not need
 
 ### NODE_EXTRA_CA_CERTS
 
-When set, the well known "root" CAs (like VeriSign) will be extended with the extra certificates in file. The file should consist of one or more trusted certificates in PEM format. A message will be emitted (once) with process.emitWarning() if the file is missing or malformed, but any errors are otherwise ignored.  You can pass the environment variable into the ldap-tester script on the command line like this:
+If connecting to LDAP over TLS (i.e., ldaps://) you may need to add your custom trusted certificates.  When set, the well known "root" CAs (like VeriSign) will be extended with the extra certificates in file. The file should consist of one or more trusted certificates in PEM format. A message will be emitted (once) with process.emitWarning() if the file is missing or malformed, but any errors are otherwise ignored.  You can pass the environment variable into the ldap-tester script on the command line like this:
 
 ```
 NODE_EXTRA_CA_CERTS=/etc/pki/tls/mycert.pem ./ldap-tester.sh user --config ./my-config.js --username testuser@breach.local
