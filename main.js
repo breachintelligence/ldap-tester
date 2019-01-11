@@ -28,7 +28,6 @@ const authCmd = {
     log.info({ connection: connectionOptions }, 'Starting Authenticate Call');
     const ldap = new LDAP(connectionOptions, log);
     ldap.authenticate(argv.username, argv.password, function(err, isAuthenticated) {
-      ldap.close();
       if (err) {
         log.error({ err: err }, 'Error running auth command');
       } else {
@@ -39,6 +38,9 @@ const authCmd = {
           log.info('>> ' + argv.username + ' is NOT authenticated');
         }
       }
+      ldap.close((closeErr) => {
+        log.info('Closing LDAP Tester');
+      });
     });
   }
 };
@@ -59,12 +61,14 @@ const getUserDetails = {
     log.info({ connection: connectionOptions }, 'Starting getUserDetails Call');
     const ldap = new LDAP(connectionOptions, log);
     ldap.getUserDetails(argv.username, function(err, details) {
-      ldap.close();
       if (err) {
         log.error({ err: err }, 'Error running getUserDetails command');
       } else {
         log.info({ details: details }, 'User Details');
       }
+      ldap.close((closeErr) => {
+          log.info('Closing LDAP Tester');
+      });
     });
   }
 };
@@ -92,7 +96,6 @@ const isMemberCmd = {
     log.info({ connection: connectionOptions }, 'Starting isMemberOf Call');
     const ldap = new LDAP(connectionOptions, log);
     ldap.isMemberOf(argv.username, argv.group, function(err, isMember) {
-      ldap.close();
       if (err) {
         log.error({ err: err }, 'Error running isMemberOf command');
       } else {
@@ -103,6 +106,9 @@ const isMemberCmd = {
           log.info('>> ' + argv.username + ' is NOT a member of ' + argv.group);
         }
       }
+      ldap.close((closeErr) => {
+          log.info('Closing LDAP Tester');
+      });
     });
   }
 };

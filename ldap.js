@@ -84,13 +84,21 @@ class Ldap {
       });
     });
   }
-  close() {
-    this.client.close();
+  close(cb) {
+    const self = this;
+    this.client.close(function(err) {
+      if (err) {
+        self.log.error({err}, 'LDAP Close Error');
+        cb(err);
+      } else {
+        cb(null);
+      }
+    });
   }
-  _getAttribute(user, option){
-    if(typeof user[option] !== 'undefined'){
+  _getAttribute(user, option) {
+    if (typeof user[option] !== 'undefined') {
       return user[option];
-    }else{
+    } else {
       return `<attribute '${option}' not found>`;
     }
   }
