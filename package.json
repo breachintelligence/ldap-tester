@@ -2,13 +2,13 @@
   "name": "ldap-tester",
   "description": "Tool to test LDAP authentication",
   "author": "Ed Dorsey <ed@polarity.io>",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "lib/main",
   "private": true,
   "dependencies": {
     "bunyan": "2.0.2",
     "yargs": "12.0.1",
-    "ldapauth-fork": "git+ssh://git@github.com:breachintelligence/node-ldapauth-fork"
+    "ldapauth-fork": "breachintelligence/node-ldapauth-fork"
   },
   "engine": "node >= 0.12",
   "os": [
