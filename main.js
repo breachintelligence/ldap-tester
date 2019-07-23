@@ -84,12 +84,6 @@ const isMemberCmd = {
         nargs: 1,
         describe: 'Username you want to test group membership of'
       })
-      .option('group', {
-        type: 'string',
-        demand: 'You must provide the "group" that you want to test membership in',
-        nargs: 1,
-        describe: 'Group name to test membership in'
-      });
   },
   handler: (argv) => {
     let connectionOptions = getConnectionObject(argv);
@@ -101,9 +95,9 @@ const isMemberCmd = {
       } else {
         log.info({ username: argv.username, isMember: isMember }, 'Finished isMemberOf command');
         if (isMember) {
-          log.info('>> ' + argv.username + ' IS a member of ' + argv.group);
+          log.info('>> ' + argv.username + ' IS a member in the allowed groups');
         } else {
-          log.info('>> ' + argv.username + ' is NOT a member of ' + argv.group);
+          log.info('>> ' + argv.username + ' is NOT a member of the allowed groups');
         }
       }
       ldap.close((closeErr) => {

@@ -2,10 +2,26 @@ const LdapAuth = require('ldapauth-fork');
 
 class Ldap {
   constructor(connectionOptions, log) {
+    let self = this;
     this.log = log;
+    this.groupSearchFilter = connectionOptions.groupSearchFilter;
+    this.groupDnProperty = connectionOptions.groupDnProperty;
 
     try {
       this.options = connectionOptions;
+      if (this.options.groupSearchFilter) {
+        this.options.groupSearchFilter = (user) => {
+          return (
+            self.groupSearchFilter
+              .replace(/{{dn}}/g, user[self.groupDnProperty])
+              // There is a bug in the default group search filter where special characters (e.g., a comma)
+              // are not properly escaped when passed to to the LDAP server.  The below replacement ensures
+              // that any escaped special characters are passed as escaped to the LDAP server
+              // https://polarity.atlassian.net/browse/SVR-550
+              .replace(/\\/g, '\\\\')
+          );
+        };
+      }
       this.client = new LdapAuth(connectionOptions);
 
       // Issue related to https://github.com/mcavage/node-ldapjs/issues/162
@@ -88,7 +104,7 @@ class Ldap {
     const self = this;
     this.client.close(function(err) {
       if (err) {
-        self.log.error({err}, 'LDAP Close Error');
+        self.log.error({ err }, 'LDAP Close Error');
         cb(err);
       } else {
         cb(null);

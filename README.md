@@ -87,24 +87,24 @@ Sample values:
 ./ldap-tester.sh auth --config ./my-config.js --username testuser@polarity.local --password h3llo56
 ```
 
-### Test if User is Member of a Group
+### Test if User is Member of the specified Groups
+
+This method can be used to test if a user with the given `usernam` will have access to Polarity based on the specified `groupSearchFilter` and `groupSearchBase`.
 
 #### --username
 The username to test
 
 > Note that the `username` should be formatted so that the search filter as specified by the `searchFilter` option can find the user. Keep in mind the `username` will replace the string `{{username}}` in the search filter.
 
-#### --group
-The group you want to test membership of the given `username` in
 
 ```
-./ldap-tester.sh isMember --config <path-to-config> --username <username>  --group <group>
+./ldap-tester.sh isMember --config <path-to-config> --username <username>
 ```
 
 Sample values:
 
 ```
-./ldap-tester.sh isMember --config ./my-config.js --username testuser@breach.local  --group PolarityUsers
+./ldap-tester.sh isMember --config ./my-config.js --username testuser@breach.local
 ```
 
 ### Get User Details
